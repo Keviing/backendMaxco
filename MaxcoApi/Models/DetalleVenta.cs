@@ -14,10 +14,10 @@ namespace MaxcoApi.Models
 
         public int Cantidad { get; set; }
 
-        [Column(TypeName = "decimal(18, 2)")]
+        [Column(TypeName = "decimal(18,2)")]
         public decimal PrecioUnitario { get; set; }
 
-        [Column(TypeName = "decimal(18, 2)")]
+        [Column(TypeName = "decimal(18,2)")]
         public decimal Subtotal { get; set; }
 
         public Venta Venta { get; set; }

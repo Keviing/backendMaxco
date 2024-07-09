@@ -31,6 +31,8 @@ namespace MaxcoApi.Services
 
         public async Task<DetalleVenta> AddAsync(DetalleVenta detalleVenta)
         {
+            detalleVenta.Subtotal = detalleVenta.Cantidad * detalleVenta.PrecioUnitario;
+
             _context.DetallesVentas.Add(detalleVenta);
             await _context.SaveChangesAsync();
             return detalleVenta;

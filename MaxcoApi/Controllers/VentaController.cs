@@ -36,6 +36,8 @@ namespace MaxcoApi.Controllers
         [HttpPost]
         public async Task<ActionResult<Venta>> AddVenta(Venta venta)
         {
+        
+
             var createdVenta = await _ventaService.AddVentaAsync(venta);
             return CreatedAtAction(nameof(GetVenta), new { id = createdVenta.Id }, createdVenta);
         }

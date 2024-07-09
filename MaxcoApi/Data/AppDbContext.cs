@@ -18,7 +18,7 @@ namespace MaxcoApi.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            // Configuraciones adicionales
+            
             modelBuilder.Entity<Venta>()
                 .HasOne(v => v.Cliente)
                 .WithMany()
@@ -44,6 +44,8 @@ namespace MaxcoApi.Data
                 .WithMany()
                 .HasForeignKey(dv => dv.IdProducto);
         }
+
+
 
     }
 }

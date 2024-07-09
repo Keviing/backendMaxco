@@ -15,6 +15,7 @@ builder.Services.AddScoped<IServiceZona, ServiceZona>();
 builder.Services.AddScoped<IServiceVendedor, ServiceVendedor>();
 builder.Services.AddScoped<IServiceVenta, ServiceVenta>(); 
 builder.Services.AddScoped<IServiceDetalle, ServiceDetalleVenta>();
+builder.Services.AddScoped<IServiceReport, ServiceReport>();
 
 
 builder.Services.AddControllers();
@@ -30,6 +31,20 @@ options.AddPolicy("nuevaPolitica", app =>
 })
 );
 var app = builder.Build();
+
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    try
+    {
+        SeedDb.Initialize(services);
+    }
+    catch (Exception ex)
+    {
+        var logger = services.GetRequiredService<ILogger<Program>>();
+        logger.LogError(ex, "An error occurred seeding the DB.");
+    }
+}
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

@@ -4,6 +4,7 @@ using MaxcoApi.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MaxcoApi.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240708212617_calculos")]
+    partial class calculos
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -70,16 +73,11 @@ namespace MaxcoApi.Migrations
                     b.Property<decimal>("Subtotal")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<int?>("VentaId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
                     b.HasIndex("IdProducto");
 
                     b.HasIndex("IdVenta");
-
-                    b.HasIndex("VentaId");
 
                     b.ToTable("DetallesVentas");
                 });
@@ -204,10 +202,6 @@ namespace MaxcoApi.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("MaxcoApi.Models.Venta", null)
-                        .WithMany("DetalleVentas")
-                        .HasForeignKey("VentaId");
-
                     b.Navigation("Producto");
 
                     b.Navigation("Venta");
@@ -238,11 +232,6 @@ namespace MaxcoApi.Migrations
                     b.Navigation("Vendedor");
 
                     b.Navigation("Zona");
-                });
-
-            modelBuilder.Entity("MaxcoApi.Models.Venta", b =>
-                {
-                    b.Navigation("DetalleVentas");
                 });
 #pragma warning restore 612, 618
         }
