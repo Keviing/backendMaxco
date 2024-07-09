@@ -26,5 +26,31 @@ namespace MaxcoApi.Services
 
             return query.OrderByDescending(x => x.TotalVentas).AsQueryable();
         }
+
+        public IQueryable<string> GetZonasSinVentas(DateTime fechaInicio, DateTime fechaFin)
+        {
+            var zonasConVentas = from venta in _context.Ventas
+                                 where venta.Fecha >= fechaInicio && venta.Fecha <= fechaFin
+                                 select venta.Id_Zona;
+
+            var zonasSinVentas = from zona in _context.Zonas
+                                 where !zonasConVentas.Contains(zona.Id)
+                                 select zona.NombreZona;
+
+            return zonasSinVentas.AsQueryable();
+        }
+
+        public IQueryable<string> GetVendedoresSinVentas(DateTime fechaInicio, DateTime fechaFin)
+        {
+            var vendedoresConVentas = from venta in _context.Ventas
+                                      where venta.Fecha >= fechaInicio && venta.Fecha <= fechaFin
+                                      select venta.Id_Vendedor;
+
+            var vendedoresSinVentas = from vendedor in _context.Vendedores
+                                      where !vendedoresConVentas.Contains(vendedor.Id)
+                                      select vendedor.Nombre;
+
+            return vendedoresSinVentas.AsQueryable();
+        }
     }
 }
